@@ -34,6 +34,7 @@ const UserSchema = new Schema<IUserDocument>(
 		},
 	},
 	{
+		versionKey: false,
 		timestamps: true,
 	},
 );
