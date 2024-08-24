@@ -1,8 +1,8 @@
-import User from "../models/User";
+import userRepository from "../repositories/user.repository";
 import type { RegisterUserDto } from "../schemas/register_user.schema";
 
 const registerUser = async ({ email, role }: RegisterUserDto) => {
-	const user = await User.create({ email, role });
+	const user = await userRepository.createUser({ email, role });
 	// TODO: Send verification email
 	return user;
 };
