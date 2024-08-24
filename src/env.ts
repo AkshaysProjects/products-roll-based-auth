@@ -13,6 +13,14 @@ const envSchema = z.object({
 	JWT_VERIFICATION_SECRET: z.string({
 		message: "JWT Verification Secret is required",
 	}),
+	FIREBASE_PROJECT_ID: z.string({ message: "Firebase Project ID is required" }),
+	FIREBASE_PRIVATE_KEY: z.string({
+		message: "Firebase Private Key is required",
+	}),
+	FIREBASE_CLIENT_EMAIL: z.string({
+		message: "Firebase Client Email is required",
+	}),
+	FIREBASE_BUCKET: z.string({ message: "Firebase Bucket is required" }),
 });
 
 // Ensure the parsed environment variables

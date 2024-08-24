@@ -1,6 +1,7 @@
 import express from "express";
 import connectDb from "./db";
 import { env } from "./env";
+import "./firebase/admin";
 import frontendRouter from "./frontend";
 import errorHandler from "./middlewares/error_handler.middleware";
 import apiRouter from "./routes";
