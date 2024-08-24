@@ -1,6 +1,7 @@
 import express from "express";
 import connectDb from "./db";
 import { env } from "./env";
+import errorHandler from "./middlewares/error_handler.middleware";
 import apiRouter from "./routes";
 
 // Create a new express application instance
@@ -16,6 +17,9 @@ app.get("/", (_req, res) => {
 
 // Define a route handler for the /api path
 app.use("/api", apiRouter);
+
+// Use error handler middleware
+app.use(errorHandler);
 
 // Function to start the app
 async function startApp() {

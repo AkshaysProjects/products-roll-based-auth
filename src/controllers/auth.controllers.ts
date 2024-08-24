@@ -1,14 +1,18 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import type { RegisterUserDto } from "../schemas/register_user.schema";
 import authServices from "../services/auth.services";
 
-const registerUser = async (req: Request, res: Response) => {
+const registerUser = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	const registerUserDto: RegisterUserDto = req.body;
 	try {
 		const user = await authServices.registerUser(registerUserDto);
-		res.status(201).json(user);
+		return res.status(201).json(user);
 	} catch (error) {
-		res.status(500).json({ message: "Internal Server Error" });
+		return next(error);
 	}
 };
 
