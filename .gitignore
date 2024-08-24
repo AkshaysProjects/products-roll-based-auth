@@ -9,3 +9,6 @@ node_modules/
 
 # Database Data
 data
+
+# Bun lock
+bun.lockb
