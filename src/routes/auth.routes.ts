@@ -1,7 +1,12 @@
 import { Router } from "express";
-import { validateRequestBody } from "zod-express-middleware";
+import {
+	validateRequestBody,
+	validateRequestQuery,
+} from "zod-express-middleware";
 import authControllers from "../controllers/auth.controllers";
+import { loginSchema } from "../schemas/login.schema";
 import { registerUserSchema } from "../schemas/register_user.schema";
+import { verifyEmailSchema } from "../schemas/verify_email.schema";
 
 // Create a new express router
 const authRouter = Router();
@@ -13,7 +18,18 @@ authRouter.post(
 	authControllers.registerUser,
 );
 
+// Verify email of a user
+authRouter.get(
+	"/verify",
+	validateRequestQuery(verifyEmailSchema),
+	authControllers.verifyEmail,
+);
+
 // Login a user
-authRouter.post("/login", authControllers.loginUser);
+authRouter.post(
+	"/login",
+	validateRequestBody(loginSchema),
+	authControllers.loginUser,
+);
 
 export default authRouter;

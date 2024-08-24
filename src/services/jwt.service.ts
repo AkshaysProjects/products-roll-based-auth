@@ -1,5 +1,10 @@
 import jwt from "jsonwebtoken";
+import { Unauthorized } from "ts-httpexceptions";
 import { env } from "../env";
+
+export interface JwtPayload {
+	userId: string;
+}
 
 export const generateVerificationToken = (
 	userId: string,
@@ -19,18 +24,20 @@ export const generateLoginToken = (userId: string, exp: number = 60 * 60) => {
 const verifyVerificationToken = (token: string) => {
 	try {
 		const decoded = jwt.verify(token, env.JWT_VERIFICATION_SECRET);
-		return decoded;
+		// TODO: Invalidate after using it once (Using redis?)
+		return decoded as JwtPayload;
 	} catch (error) {
-		return null;
+		throw new Unauthorized("Invalid token");
 	}
 };
 
 const verifyLoginToken = (token: string) => {
 	try {
 		const decoded = jwt.verify(token, env.JWT_SECRET);
-		return decoded;
+		// TODO: Invalidate after using it once (Using redis?)
+		return decoded as JwtPayload;
 	} catch (error) {
-		return null;
+		throw new Unauthorized("Invalid token");
 	}
 };
 
