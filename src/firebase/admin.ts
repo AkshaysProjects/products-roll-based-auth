@@ -1,3 +1,4 @@
+import { storage } from "firebase-admin";
 import { type ServiceAccount, cert, initializeApp } from "firebase-admin/app";
 import { env } from "../env";
 
@@ -11,3 +12,5 @@ initializeApp({
 	credential: cert(serviceAccount),
 	storageBucket: env.FIREBASE_BUCKET,
 });
+
+export const bucket = storage().bucket();
