@@ -11,4 +11,10 @@ changeRouter.use(authMiddleware);
 // Get all pending changes
 changeRouter.get("/", changeControllers.getPendingChanges);
 
+// Approve a pending change
+changeRouter.post("/:id/approve", changeControllers.approveChange);
+
+// Reject a pending change
+changeRouter.post("/:id/reject", changeControllers.rejectChange);
+
 export default changeRouter;

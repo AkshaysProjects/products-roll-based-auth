@@ -27,8 +27,19 @@ const findProductById = async (id: string) => {
 	return Product.findById(id).lean();
 };
 
-const findByIdAndUpdate = async (id: string, data: Partial<IProduct>) => {
-	return Product.findByIdAndUpdate(id, data, { new: true }).lean();
+const findPendingProductById = async (id: string | ObjectId) => {
+	return PendingProduct.findById(id).lean();
+};
+
+const findByIdAndUpdate = async (
+	id: string | ObjectId,
+	data: Partial<IProduct>,
+) => {
+	return Product.findByIdAndUpdate(id, data, {
+		new: true,
+		upsert: true,
+		setDefaultsOnInsert: true,
+	}).lean();
 };
 
 const updateProduct = async (
@@ -58,6 +69,7 @@ export default {
 	createProduct,
 	createPendingProduct,
 	findAllProducts,
+	findPendingProductById,
 	findProductById,
 	findByIdAndUpdate,
 	updateProduct,

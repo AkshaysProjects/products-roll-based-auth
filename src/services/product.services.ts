@@ -1,4 +1,3 @@
-import PendingChange, { ChangeStatus } from "../models/PendingChange";
 import type { IProduct } from "../models/Product";
 import { type IUser, UserRole } from "../models/User";
 import productRepository from "../repositories/product.repository";
@@ -13,14 +12,6 @@ const getAllProducts = async () => {
 
 const getProductById = async (productId: string) => {
 	return productRepository.findProductById(productId);
-};
-
-const getPendingChanges = async (user: IUser) => {
-	return user.role === UserRole.ADMIN
-		? PendingChange.find({ status: ChangeStatus.PENDING })
-				.populate("product")
-				.lean()
-		: PendingChange.find({ user: user._id }).populate("product").lean();
 };
 
 const createProduct = async (
@@ -65,7 +56,6 @@ const deleteProduct = async (productId: string) => {
 export default {
 	getAllProducts,
 	getProductById,
-	getPendingChanges,
 	createProduct,
 	updateProduct,
 	deleteProduct,
