@@ -3,7 +3,6 @@ import session from "express-session";
 import sessionConfig from "./config/session";
 import connectDb from "./db";
 import { env } from "./env";
-import frontendRouter from "./frontend";
 import errorHandler from "./middlewares/error_handler.middleware";
 import apiRouter from "./routes";
 
@@ -23,10 +22,6 @@ app.get("/", (_req, res) => {
 
 // Define a route handler for the /api path
 app.use("/api", apiRouter);
-
-// Temporary frontend routes
-// TODO: Remove this after the frontend is ready
-app.use("/", frontendRouter);
 
 // Use error handler middleware
 app.use(errorHandler);
