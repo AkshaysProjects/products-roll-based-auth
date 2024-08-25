@@ -4,6 +4,7 @@ import type { CreateProductDto } from "../schemas/create_product.schema";
 export const createProduct = async (
 	product: CreateProductDto,
 	imageUrl: string,
+	email?: string,
 ) => {
 	const newProduct = {
 		name: product.name,
@@ -12,7 +13,9 @@ export const createProduct = async (
 		image: imageUrl,
 	};
 
-	return productRepository.createProduct(newProduct);
+	return email
+		? await productRepository.crearePendingProduct(newProduct, email)
+		: await productRepository.createProduct(newProduct);
 };
 
 export default { createProduct };

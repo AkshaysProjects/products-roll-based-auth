@@ -10,7 +10,7 @@ export interface IProduct {
 
 export interface IProductDocument extends IProduct, Document<ObjectId> {}
 
-const ProductSchema = new Schema<IProductDocument>(
+export const ProductSchema = new Schema<IProductDocument>(
 	{
 		name: {
 			type: String,
