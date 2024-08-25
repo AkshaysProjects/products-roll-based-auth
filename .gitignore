@@ -12,3 +12,6 @@ data
 
 # Bun lock
 bun.lockb
+
+# Service Account
+config/serviceAccount.json
