@@ -1,8 +1,8 @@
 import productRepository from "../repositories/product.repository";
-import type { CreateProductDto } from "../schemas/create_product.schema";
+import type { ProductDto } from "../schemas/product.schema";
 
 export const createProduct = async (
-	product: CreateProductDto,
+	product: ProductDto,
 	imageUrl: string,
 	email?: string,
 ) => {

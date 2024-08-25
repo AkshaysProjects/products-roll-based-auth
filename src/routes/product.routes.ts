@@ -3,18 +3,37 @@ import { validateRequestBody } from "zod-express-middleware";
 import productControllers from "../controllers/product.controllers";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import upload from "../multer";
-import { createProductSchema } from "../schemas/create_product.schema";
+import { productSchema } from "../schemas/product.schema";
 
 // Create a new express router
 const productRouter = Router();
 
-// Product Routes
+// Get all products
+productRouter.get("/", productControllers.getAllProducts);
+
+// Get a single product
+productRouter.get("/:id", productControllers.getProductById);
+
+// Guard all the next routes with auth middleware
+productRouter.use(authMiddleware);
+
+// Create a new product
 productRouter.post(
 	"/",
-	authMiddleware,
 	upload.single("image"),
-	validateRequestBody(createProductSchema),
+	validateRequestBody(productSchema),
 	productControllers.createProduct,
 );
+
+// Update a product
+productRouter.patch(
+	"/:id",
+	upload.single("image"),
+	validateRequestBody(productSchema),
+	productControllers.updateProduct,
+);
+
+// Delete a product
+productRouter.delete("/:id", productControllers.deleteProduct);
 
 export default productRouter;

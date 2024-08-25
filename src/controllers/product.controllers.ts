@@ -4,6 +4,14 @@ import { uploadImage } from "../firebase/storage";
 import { type IUser, UserRole } from "../models/User";
 import productServices from "../services/product.services";
 
+const getAllProducts = async (_req: Request, _res: Response) => {
+	return [];
+};
+
+const getProductById = async (_req: Request, _res: Response) => {
+	return {};
+};
+
 const createProduct = async (
 	req: Request,
 	res: Response,
@@ -23,4 +31,18 @@ const createProduct = async (
 	}
 };
 
-export default { createProduct };
+const updateProduct = async (
+	_req: Request,
+	_res: Response,
+	_next: NextFunction,
+) => {};
+
+const deleteProduct = async (_req: Request, _res: Response) => {};
+
+export default {
+	getAllProducts,
+	getProductById,
+	createProduct,
+	updateProduct,
+	deleteProduct,
+};
