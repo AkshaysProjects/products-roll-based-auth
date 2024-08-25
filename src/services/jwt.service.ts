@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { Unauthorized } from "ts-httpexceptions";
+import { Unauthorized } from "@tsed/exceptions";
 import { client } from "../config/redis";
 import { env } from "../env";
 

@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import sessionConfig from "./config/session";
 import connectDb from "./db";
 import { env } from "./env";

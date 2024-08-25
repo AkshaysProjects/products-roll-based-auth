@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { BadRequest } from "ts-httpexceptions";
+import { BadRequest } from "@tsed/exceptions";
 import { uploadImage } from "../firebase/storage";
 import productServices from "../services/product.services";
 

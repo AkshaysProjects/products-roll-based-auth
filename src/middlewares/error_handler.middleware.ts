@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { Exception } from "ts-httpexceptions";
+import { Exception } from "@tsed/exceptions";
 
 const errorHandler = (
 	err: unknown,

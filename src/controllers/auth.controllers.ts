@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { InternalServerError } from "ts-httpexceptions";
+import { InternalServerError } from "@tsed/exceptions";
 import type { LoginDto } from "../schemas/login.schema";
 import type { RegisterUserDto } from "../schemas/register_user.schema";
 import authServices from "../services/auth.services";

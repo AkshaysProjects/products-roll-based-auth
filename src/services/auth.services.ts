@@ -3,7 +3,7 @@ import {
 	InternalServerError,
 	NotFound,
 	Unauthorized,
-} from "ts-httpexceptions";
+} from "@tsed/exceptions";
 import userRepository from "../repositories/user.repository";
 import type { RegisterUserDto } from "../schemas/register_user.schema";
 import jwtService from "./jwt.service";

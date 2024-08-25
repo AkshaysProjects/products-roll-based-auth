@@ -1,5 +1,5 @@
 import multer, { memoryStorage } from "multer";
-import { BadRequest } from "ts-httpexceptions";
+import { BadRequest } from "@tsed/exceptions";
 
 const upload = multer({
 	storage: memoryStorage(),

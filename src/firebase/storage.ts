@@ -1,4 +1,4 @@
-import { InternalServerError } from "ts-httpexceptions";
+import { InternalServerError } from "@tsed/exceptions";
 import { v4 as uuid } from "uuid";
 import { env } from "../env";
 import { bucket } from "./admin";
