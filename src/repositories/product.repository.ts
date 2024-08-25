@@ -1,8 +1,7 @@
-import { NotFound } from "@tsed/exceptions";
 import PendingChange from "../models/PendingChange";
 import PendingProduct from "../models/PendingProduct";
 import Product, { type IProduct } from "../models/Product";
-import userRepository from "./user.repository";
+import { ObjectId } from "../types";
 
 const createProduct = async (product: Partial<IProduct>) => {
 	return Product.create(product);
@@ -10,31 +9,55 @@ const createProduct = async (product: Partial<IProduct>) => {
 
 const crearePendingProduct = async (
 	product: Partial<IProduct>,
-	email: string,
+	userId: ObjectId,
 ) => {
-	const user = await userRepository.findUserByEmail(email);
-
-	if (!user) throw new NotFound("User not found");
-
 	const data = await PendingProduct.create(product);
 	const change = await PendingChange.create({
-		userId: user._id,
+		userId,
 		pendingChange: data._id,
 	});
 	return { data, change };
 };
 
+const findAllProducts = async () => {
+	return Product.find().lean();
+};
+
 const findProductById = async (id: string) => {
-	return Product.findById(id);
+	return Product.findById(id).lean();
 };
 
 const findByIdAndUpdate = async (id: string, data: Partial<IProduct>) => {
-	return Product.findByIdAndUpdate(id, data, { new: true });
+	return Product.findByIdAndUpdate(id, data, { new: true }).lean();
+};
+
+const updateProduct = async (
+	productId: string,
+	data: Partial<IProduct>,
+	userId?: ObjectId,
+) => {
+	if (userId) {
+		const pendingChange = await PendingProduct.create(data);
+		const change = await PendingChange.create({
+			userId,
+			productId: new ObjectId(productId),
+			pendingChange: pendingChange._id,
+		});
+		return { pendingChange, change };
+	}
+	return Product.findByIdAndUpdate(productId, data, { new: true }).lean();
+};
+
+const deleteProduct = async (productId: string) => {
+	return Product.findByIdAndDelete(productId);
 };
 
 export default {
 	createProduct,
 	crearePendingProduct,
+	findAllProducts,
 	findProductById,
 	findByIdAndUpdate,
+	updateProduct,
+	deleteProduct,
 };

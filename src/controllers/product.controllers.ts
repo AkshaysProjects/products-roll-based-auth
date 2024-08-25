@@ -1,15 +1,36 @@
-import { BadRequest } from "@tsed/exceptions";
+import { BadRequest, NotFound, Unauthorized } from "@tsed/exceptions";
 import type { NextFunction, Request, Response } from "express";
 import { uploadImage } from "../firebase/storage";
-import { type IUser, UserRole } from "../models/User";
+import { UserRole, type IUser } from "../models/User";
 import productServices from "../services/product.services";
 
-const getAllProducts = async (_req: Request, _res: Response) => {
-	return [];
+const getAllProducts = async (
+	_req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const products = await productServices.getAllProducts();
+		return res.status(200).json(products);
+	} catch (error) {
+		return next(error);
+	}
 };
 
-const getProductById = async (_req: Request, _res: Response) => {
-	return {};
+const getProductById = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const productId = req.params.id;
+	if (!productId) return next(new BadRequest("No product id provided"));
+	try {
+		const product = await productServices.getProductById(productId);
+		if (!product) throw new NotFound("Product not found");
+		return res.status(200).json(product);
+	} catch (error) {
+		return next(error);
+	}
 };
 
 const createProduct = async (
@@ -21,10 +42,11 @@ const createProduct = async (
 	if (!req.file) return next(new BadRequest("No file uploaded"));
 	try {
 		const imageUrl = await uploadImage(req.file);
-		const product =
-			user.role === UserRole.ADMIN
-				? await productServices.createProduct(req.body, imageUrl)
-				: await productServices.createProduct(req.body, imageUrl, user.email);
+		const product = await productServices.createProduct(
+			req.body,
+			imageUrl,
+			user,
+		);
 		return res.status(201).json(product);
 	} catch (error) {
 		return next(error);
@@ -32,12 +54,44 @@ const createProduct = async (
 };
 
 const updateProduct = async (
-	_req: Request,
-	_res: Response,
-	_next: NextFunction,
-) => {};
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const user = req.session.user as IUser;
+	const productId = req.params.id;
+	if (!productId) return next(new BadRequest("No product id provided"));
+	try {
+		const imageUrl = req.file ? await uploadImage(req.file) : undefined;
+		const product = await productServices.updateProduct(
+			productId,
+			req.body,
+			user,
+			imageUrl,
+		);
+		return res.status(200).json(product);
+	} catch (error) {
+		return next(error);
+	}
+};
 
-const deleteProduct = async (_req: Request, _res: Response) => {};
+const deleteProduct = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	const user = req.session.user as IUser;
+	if (user.role !== UserRole.ADMIN)
+		return next(new Unauthorized("Unauthorized"));
+	const productId = req.params.id;
+	if (!productId) return next(new BadRequest("No product id provided"));
+	try {
+		const product = await productServices.deleteProduct(productId);
+		return res.status(200).json(product);
+	} catch (error) {
+		return next(error);
+	}
+};
 
 export default {
 	getAllProducts,

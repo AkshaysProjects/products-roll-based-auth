@@ -1,10 +1,23 @@
+import type { IProduct } from "../models/Product";
+import { type IUser, UserRole } from "../models/User";
 import productRepository from "../repositories/product.repository";
-import type { ProductDto } from "../schemas/product.schema";
+import type {
+	CreateProductDto,
+	UpdateProductDto,
+} from "../schemas/product.schema";
 
-export const createProduct = async (
-	product: ProductDto,
+const getAllProducts = async () => {
+	return productRepository.findAllProducts();
+};
+
+const getProductById = async (productId: string) => {
+	return productRepository.findProductById(productId);
+};
+
+const createProduct = async (
+	product: CreateProductDto,
 	imageUrl: string,
-	email?: string,
+	user: IUser,
 ) => {
 	const newProduct = {
 		name: product.name,
@@ -13,9 +26,37 @@ export const createProduct = async (
 		image: imageUrl,
 	};
 
-	return email
-		? await productRepository.crearePendingProduct(newProduct, email)
-		: await productRepository.createProduct(newProduct);
+	return user.role === UserRole.ADMIN
+		? productRepository.crearePendingProduct(newProduct, user._id)
+		: productRepository.createProduct(newProduct);
 };
 
-export default { createProduct };
+const updateProduct = async (
+	productId: string,
+	product: UpdateProductDto,
+	user: IUser,
+	imageUrl: string | undefined,
+) => {
+	const newProduct: Partial<IProduct> = {
+		name: product.name as string,
+		description: product.description as string,
+		price: product.price as number,
+		image: imageUrl as string,
+	};
+
+	return user.role === UserRole.ADMIN
+		? productRepository.updateProduct(productId, newProduct, user._id)
+		: productRepository.updateProduct(productId, newProduct);
+};
+
+const deleteProduct = async (productId: string) => {
+	return productRepository.deleteProduct(productId);
+};
+
+export default {
+	getAllProducts,
+	getProductById,
+	createProduct,
+	updateProduct,
+	deleteProduct,
+};

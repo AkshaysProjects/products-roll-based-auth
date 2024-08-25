@@ -3,7 +3,10 @@ import { validateRequestBody } from "zod-express-middleware";
 import productControllers from "../controllers/product.controllers";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import upload from "../multer";
-import { productSchema } from "../schemas/product.schema";
+import {
+	createProductSchema,
+	updateProductSchema,
+} from "../schemas/product.schema";
 
 // Create a new express router
 const productRouter = Router();
@@ -21,7 +24,7 @@ productRouter.use(authMiddleware);
 productRouter.post(
 	"/",
 	upload.single("image"),
-	validateRequestBody(productSchema),
+	validateRequestBody(createProductSchema),
 	productControllers.createProduct,
 );
 
@@ -29,7 +32,7 @@ productRouter.post(
 productRouter.patch(
 	"/:id",
 	upload.single("image"),
-	validateRequestBody(productSchema),
+	validateRequestBody(updateProductSchema),
 	productControllers.updateProduct,
 );
 
