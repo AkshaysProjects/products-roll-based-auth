@@ -7,3 +7,14 @@ services:
     volumes:
       - ./data:/data/db
     restart: unless-stopped
+
+  redis:
+    container_name: redis
+    image: docker.dragonflydb.io/dragonflydb/dragonfly
+    network_mode: host
+    env_file: 
+      - .env
+    volumes:
+      - ./data/redis:/data
+    command: ["--requirepass", "${REDIS_PASSWORD}"]
+    restart: unless-stopped

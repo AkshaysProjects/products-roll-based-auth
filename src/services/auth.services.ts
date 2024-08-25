@@ -36,7 +36,7 @@ const registerUser = async ({ email, role }: RegisterUserDto) => {
 };
 
 const verifyEmail = async (token: string) => {
-	const { userId } = jwtService.verifyVerificationToken(token);
+	const { userId } = await jwtService.verifyVerificationToken(token);
 	const user = await userRepository.findByIdAndUpdate(userId, {
 		emailVerified: true,
 	});
@@ -75,16 +75,13 @@ const loginWithEmail = async (email: string) => {
 
 const loginWithToken = async (token: string) => {
 	// Verify the login token
-	const { userId } = jwtService.verifyLoginToken(token);
+	const { userId } = await jwtService.verifyLoginToken(token);
 
 	// Get the user
 	const user = await userRepository.findUserById(userId);
 
 	// If the user doesn't exist, throw an error
 	if (!user) throw new NotFound("User not found");
-
-	// TODO: Actually log the user in
-	// Session or JWT based cookie? Will decide later
 
 	// Return the user
 	return user;

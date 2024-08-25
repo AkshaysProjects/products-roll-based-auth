@@ -1,4 +1,5 @@
 import express from "express";
+import sessionConfig from "./config/session";
 import connectDb from "./db";
 import { env } from "./env";
 import frontendRouter from "./frontend";
@@ -10,6 +11,9 @@ const app = express();
 
 // Use body parser to parse JSON requests
 app.use(express.json());
+
+// Use session middleware
+app.use(session(sessionConfig));
 
 // Define a route handler for the default home page
 app.get("/", (_req, res) => {
