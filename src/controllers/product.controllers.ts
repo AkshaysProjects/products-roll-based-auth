@@ -1,5 +1,5 @@
-import type { NextFunction, Request, Response } from "express";
 import { BadRequest } from "@tsed/exceptions";
+import type { NextFunction, Request, Response } from "express";
 import { uploadImage } from "../firebase/storage";
 import productServices from "../services/product.services";
 
