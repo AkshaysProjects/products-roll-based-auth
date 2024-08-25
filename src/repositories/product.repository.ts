@@ -4,7 +4,7 @@ import Product, { type IProduct } from "../models/Product";
 import { ObjectId } from "../types";
 
 const createProduct = async (product: Partial<IProduct>) => {
-	return Product.create(product);
+	return Product.create(product).then((data) => ({ data }));
 };
 
 const crearePendingProduct = async (
@@ -43,9 +43,11 @@ const updateProduct = async (
 			productId: new ObjectId(productId),
 			pendingChange: pendingChange._id,
 		});
-		return { pendingChange, change };
+		return { data: pendingChange, change };
 	}
-	return Product.findByIdAndUpdate(productId, data, { new: true }).lean();
+	return Product.findByIdAndUpdate(productId, data, { new: true })
+		.lean()
+		.then((data) => ({ data }));
 };
 
 const deleteProduct = async (productId: string) => {

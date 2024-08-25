@@ -27,8 +27,8 @@ const createProduct = async (
 	};
 
 	return user.role === UserRole.ADMIN
-		? productRepository.crearePendingProduct(newProduct, user._id)
-		: productRepository.createProduct(newProduct);
+		? productRepository.createProduct(newProduct)
+		: productRepository.crearePendingProduct(newProduct, user._id);
 };
 
 const updateProduct = async (
@@ -45,8 +45,8 @@ const updateProduct = async (
 	};
 
 	return user.role === UserRole.ADMIN
-		? productRepository.updateProduct(productId, newProduct, user._id)
-		: productRepository.updateProduct(productId, newProduct);
+		? productRepository.updateProduct(productId, newProduct)
+		: productRepository.updateProduct(productId, newProduct, user._id);
 };
 
 const deleteProduct = async (productId: string) => {
