@@ -15,7 +15,6 @@ const ProductSchema = new Schema<IProductDocument>(
 		name: {
 			type: String,
 			required: true,
-			unique: true,
 			trim: true,
 		},
 		description: {
