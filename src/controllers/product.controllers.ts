@@ -1,7 +1,7 @@
 import { BadRequest, NotFound, Unauthorized } from "@tsed/exceptions";
 import type { NextFunction, Request, Response } from "express";
 import { uploadImage } from "../firebase/storage";
-import { UserRole, type IUser } from "../models/User";
+import { type IUser, UserRole } from "../models/User";
 import productServices from "../services/product.services";
 
 const getAllProducts = async (

@@ -9,21 +9,21 @@ export enum ChangeStatus {
 
 export interface IPendingChange {
 	_id: ObjectId;
-	userId: ObjectId;
-	productId?: ObjectId;
+	user: ObjectId;
+	product?: ObjectId;
 	pendingChange: ObjectId;
 	status: ChangeStatus;
-	adminId?: ObjectId;
+	admin?: ObjectId;
 }
 
 export const PendingChangeSchema = new Schema<IPendingChange>(
 	{
-		userId: {
+		user: {
 			type: Schema.Types.ObjectId,
 			required: true,
 			ref: "User",
 		},
-		productId: {
+		product: {
 			type: Schema.Types.ObjectId,
 			ref: "Product",
 		},
@@ -37,7 +37,7 @@ export const PendingChangeSchema = new Schema<IPendingChange>(
 			enum: Object.values(ChangeStatus),
 			default: ChangeStatus.PENDING,
 		},
-		adminId: {
+		admin: {
 			type: Schema.Types.ObjectId,
 			ref: "User",
 		},

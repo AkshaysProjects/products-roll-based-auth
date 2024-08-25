@@ -7,13 +7,13 @@ const createProduct = async (product: Partial<IProduct>) => {
 	return Product.create(product).then((data) => ({ data }));
 };
 
-const crearePendingProduct = async (
+const createPendingProduct = async (
 	product: Partial<IProduct>,
 	userId: ObjectId,
 ) => {
 	const data = await PendingProduct.create(product);
 	const change = await PendingChange.create({
-		userId,
+		user: userId,
 		pendingChange: data._id,
 	});
 	return { data, change };
@@ -39,8 +39,8 @@ const updateProduct = async (
 	if (userId) {
 		const pendingChange = await PendingProduct.create(data);
 		const change = await PendingChange.create({
-			userId,
-			productId: new ObjectId(productId),
+			user: userId,
+			product: new ObjectId(productId),
 			pendingChange: pendingChange._id,
 		});
 		return { data: pendingChange, change };
@@ -56,7 +56,7 @@ const deleteProduct = async (productId: string) => {
 
 export default {
 	createProduct,
-	crearePendingProduct,
+	createPendingProduct,
 	findAllProducts,
 	findProductById,
 	findByIdAndUpdate,
