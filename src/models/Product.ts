@@ -1,16 +1,15 @@
-import { type Document, Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import type { ObjectId } from "../types";
 
 export interface IProduct {
+	_id: ObjectId;
 	name: string;
 	description: string;
 	price: number;
 	image: string;
 }
 
-export interface IProductDocument extends IProduct, Document<ObjectId> {}
-
-export const ProductSchema = new Schema<IProductDocument>(
+export const ProductSchema = new Schema<IProduct>(
 	{
 		name: {
 			type: String,
@@ -36,6 +35,6 @@ export const ProductSchema = new Schema<IProductDocument>(
 	},
 );
 
-const Product = model<IProductDocument>("Product", ProductSchema);
+const Product = model<IProduct>("Product", ProductSchema);
 
 export default Product;

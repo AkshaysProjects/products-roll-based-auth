@@ -1,4 +1,4 @@
-import { type Document, Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import type { ObjectId } from "../types";
 
 export enum UserRole {
@@ -7,14 +7,13 @@ export enum UserRole {
 }
 
 export interface IUser {
+	_id: ObjectId;
 	email: string;
 	emailVerified: boolean;
 	role: UserRole;
 }
 
-export interface IUserDocument extends IUser, Document<ObjectId> {}
-
-const UserSchema = new Schema<IUserDocument>(
+const UserSchema = new Schema<IUser>(
 	{
 		email: {
 			type: String,
@@ -39,6 +38,6 @@ const UserSchema = new Schema<IUserDocument>(
 	},
 );
 
-const User = model<IUserDocument>("User", UserSchema);
+const User = model<IUser>("User", UserSchema);
 
 export default User;

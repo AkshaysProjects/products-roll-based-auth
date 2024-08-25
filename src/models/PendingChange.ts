@@ -1,4 +1,4 @@
-import { type Document, Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import type { ObjectId } from "../types";
 
 export enum ChangeStatus {
@@ -8,6 +8,7 @@ export enum ChangeStatus {
 }
 
 export interface IPendingChange {
+	_id: ObjectId;
 	userId: ObjectId;
 	productId?: ObjectId;
 	pendingChange: ObjectId;
@@ -15,11 +16,7 @@ export interface IPendingChange {
 	adminId?: ObjectId;
 }
 
-export interface IPendingChangeDocument
-	extends IPendingChange,
-		Document<ObjectId> {}
-
-export const PendingChangeSchema = new Schema<IPendingChangeDocument>(
+export const PendingChangeSchema = new Schema<IPendingChange>(
 	{
 		userId: {
 			type: Schema.Types.ObjectId,
@@ -51,7 +48,7 @@ export const PendingChangeSchema = new Schema<IPendingChangeDocument>(
 	},
 );
 
-const PendingChange = model<IPendingChangeDocument>(
+const PendingChange = model<IPendingChange>(
 	"PendingChange",
 	PendingChangeSchema,
 );
