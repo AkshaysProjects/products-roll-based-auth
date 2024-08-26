@@ -1,5 +1,6 @@
 "use client";
 
+import Modal from "@/components/Modal";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Product } from "@/types/product";
 import { formatDate } from "@/utils/date";
-import { Save, X } from "lucide-react";
+import { PencilIcon, Save, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -26,6 +27,7 @@ export default function ProductEdit({
   onCancel: () => void;
 }) {
   const [product, setProduct] = useState(initialProduct);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,6 +41,14 @@ export default function ProductEdit({
 
   const handleSave = () => {
     onSave(product);
+  };
+
+  const updateImage = (imageSrc: string) => {
+    setProduct((prev) => ({
+      ...prev,
+      image: imageSrc,
+    }));
+    setImageModalOpen(false);
   };
 
   return (
@@ -58,10 +68,23 @@ export default function ProductEdit({
           <Image
             src={product.image}
             alt={product.name}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform hover:scale-105"
-          />
+            className="object-cover rounded-lg"
+            priority
+            fill
+            sizes="100vw" />
+          <Button
+            className="absolute top-2 right-2 w-10 h-10 text-white bg-gray-600 p-2 rounded-full hover:bg-gray-800"
+            title="Change photo"
+            onClick={() => setImageModalOpen(true)}
+          >
+            <PencilIcon />
+          </Button>
+          {imageModalOpen && (
+            <Modal
+              updateImage={updateImage}
+              closeModal={() => setImageModalOpen(false)}
+            />
+          )}
         </div>
         <div className="space-y-4">
           <Textarea

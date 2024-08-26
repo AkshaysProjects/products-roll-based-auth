@@ -31,10 +31,10 @@ export default function ProductView({
           <Image
             src={product.image}
             alt={product.name}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform hover:scale-105"
-          />
+            className="object-cover rounded-t-lg"
+            priority
+            fill
+            sizes="100vw" />
         </div>
         <div className="space-y-4">
           <p className="text-muted-foreground">{product.description}</p>

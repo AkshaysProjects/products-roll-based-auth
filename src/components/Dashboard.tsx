@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { getProducts } from "@/utils/products";
 import { formatDistanceToNow } from "date-fns";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function Dashboard() {
@@ -31,10 +31,10 @@ export default async function Dashboard() {
                   <Image
                     src={product.image}
                     alt={product.name}
-                    layout="fill"
                     className="object-cover rounded-t-lg"
                     priority
-                  />
+                    fill
+                    sizes="100vw" />
                 </div>
               </CardHeader>
               <CardContent className="flex-grow p-6">
