@@ -1,40 +1,52 @@
 import { useState } from "react";
+import { useDropzone } from "react-dropzone";
 
 export const useImageSelection = (
   MIN_DIMENSION: number
 ): {
   imgSrc: string;
   error: string;
-  onSelectFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  getRootProps: () => any;
+  getInputProps: () => any;
+  isDragActive: boolean;
 } => {
   const [imgSrc, setImgSrc] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const onDrop = (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.addEventListener("load", () => {
+    reader.onload = () => {
       const imageElement = new Image();
       const imageUrl = reader.result?.toString() || "";
       imageElement.src = imageUrl;
 
-      imageElement.addEventListener("load", (e) => {
-        if (error) setError("");
+      imageElement.onload = (e) => {
         const { naturalWidth, naturalHeight } =
           e.currentTarget as HTMLImageElement;
         if (naturalWidth < MIN_DIMENSION || naturalHeight < MIN_DIMENSION) {
           setError(
             `Image must be at least ${MIN_DIMENSION} x ${MIN_DIMENSION} pixels.`
           );
-          return setImgSrc("");
+          setImgSrc("");
+          return;
         }
-      });
-      setImgSrc(imageUrl);
-    });
+        setError("");
+        setImgSrc(imageUrl);
+      };
+    };
     reader.readAsDataURL(file);
   };
 
-  return { imgSrc, error, onSelectFile };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "image/jpeg": [".jpeg", ".png"],
+    },
+    multiple: false,
+  });
+
+  return { imgSrc, error, getRootProps, getInputProps, isDragActive };
 };

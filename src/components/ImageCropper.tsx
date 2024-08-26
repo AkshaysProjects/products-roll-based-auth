@@ -19,26 +19,35 @@ export default function ImageCropper({
   const imgRef = useRef<HTMLImageElement>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  const { imgSrc, error, onSelectFile } = useImageSelection(MIN_DIMENSION);
+  const { imgSrc, error, getRootProps, getInputProps, isDragActive } =
+    useImageSelection(MIN_DIMENSION);
   const { crop, onImageLoad, setCrop } = useImageCrop({
     ASPECT_RATIO,
     MIN_DIMENSION,
   });
 
   return (
-    <>
-      <label className="block mb-3 w-fit">
-        <span className="sr-only">Choose profile photo</span>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={onSelectFile}
-          className="block w-full text-sm text-slate-500 file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:bg-gray-700 file:text-sky-300 hover:file:bg-gray-600"
-        />
-      </label>
-      {error && <p className="text-red-400 text-xs">{error}</p>}
+    <div className="flex flex-col items-center justify-center">
+      {!imgSrc && (
+        <div
+          className={`w-full h-64 bg-gray-700 border-2 rounded-md flex items-center justify-center ${
+            isDragActive ? "border-blue-500" : "border-gray-600"
+          }`}
+          {...getRootProps()}
+        >
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p className="text-gray-300">Drop the image here...</p>
+          ) : (
+            <p className="text-gray-300">
+              Drag and drop an image here or click to select
+            </p>
+          )}
+        </div>
+      )}
+      {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
       {imgSrc && (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mt-4">
           <ReactCrop
             crop={crop}
             onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
@@ -85,19 +94,6 @@ export default function ImageCropper({
           </button>
         </div>
       )}
-      {crop && (
-        <canvas
-          ref={previewCanvasRef}
-          className="mt-4"
-          style={{
-            display: "none",
-            border: "1px solid black",
-            objectFit: "contain",
-            width: 150,
-            height: 150,
-          }}
-        />
-      )}
-    </>
+    </div>
   );
 }
