@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { getProducts } from "@/utils/products";
 import { formatDistanceToNow } from "date-fns";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 export default async function Dashboard() {
   const products = await getProducts();
@@ -30,8 +30,7 @@ export default async function Dashboard() {
                   src={product.image}
                   alt={product.name}
                   layout="fill"
-                  objectFit="cover"
-                  className="rounded-t-lg"
+                  className="object-cover rounded-t-lg"
                   priority
                 />
               </div>
