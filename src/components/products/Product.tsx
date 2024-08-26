@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "@/components/ui/use-toast";
+import useAuth from "@/hooks/useAuth";
 import { Product } from "@/types/product";
 import api from "@/utils/api";
 import { dataURLToBlob } from "@/utils/image";
@@ -12,6 +14,7 @@ export default function ProductDetails({
 }: {
   product: Product;
 }) {
+  const { isAuthenticated } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [product, setProduct] = useState(initialProduct);
 
@@ -33,6 +36,15 @@ export default function ProductDetails({
     setIsEditing(false);
   };
 
+  const handleEdit = () => {
+    if (isAuthenticated) setIsEditing(true);
+    else
+      toast({
+        title: "Please login to edit this product",
+        description: "You must be logged in to edit this product.",
+      });
+  };
+
   return isEditing ? (
     <ProductEdit
       product={product}
@@ -40,6 +52,6 @@ export default function ProductDetails({
       onCancel={handleCancel}
     />
   ) : (
-    <ProductView product={product} onEdit={() => setIsEditing(true)} />
+    <ProductView product={product} onEdit={handleEdit} />
   );
 }
