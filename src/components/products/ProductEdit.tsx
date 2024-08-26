@@ -1,6 +1,6 @@
 "use client";
 
-import Modal from "@/components/Modal";
+import Modal from "@/components/products/Modal";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -71,7 +71,8 @@ export default function ProductEdit({
             className="object-cover rounded-lg"
             priority
             fill
-            sizes="100vw" />
+            sizes="100vw"
+          />
           <Button
             className="absolute top-2 right-2 w-10 h-10 text-white bg-gray-600 p-2 rounded-full hover:bg-gray-800"
             title="Change photo"

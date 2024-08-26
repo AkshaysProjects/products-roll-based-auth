@@ -3,8 +3,8 @@ import Image from "next/image";
 import { useRef } from "react";
 import ReactCrop, { convertToPixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { useImageCrop } from "../hooks/useImageCrop";
-import { useImageSelection } from "../hooks/useImageSelection";
+import { useImageCrop } from "../../hooks/useImageCrop";
+import { useImageSelection } from "../../hooks/useImageSelection";
 
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;

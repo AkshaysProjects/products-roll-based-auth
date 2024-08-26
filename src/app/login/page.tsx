@@ -1,5 +1,5 @@
-import Login from "@/components/Login";
-import TokenLoader from "@/components/TokenLoader";
+import Login from "@/components/auth/Login";
+import TokenLoader from "@/components/auth/TokenLoader";
 
 export default async function RegisterPage({
   searchParams: { token },

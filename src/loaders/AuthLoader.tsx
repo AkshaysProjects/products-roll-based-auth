@@ -1,4 +1,4 @@
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/common/Spinner";
 import useAuth from "@/hooks/useAuth";
 
 export default function AuthLoader({

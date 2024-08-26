@@ -1,5 +1,5 @@
 import CloseIcon from "@/assets/CloseIcon.svg";
-import ImageCropper from "@/components/ImageCropper";
+import ImageCropper from "@/components/products/ImageCropper";
 import Image from "next/image";
 
 export default function Modal({
@@ -19,7 +19,7 @@ export default function Modal({
       <div className="relative w-[80%] sm:w-[50%] max-w-md max-h-md bg-gray-800 text-slate-100 rounded-xl shadow-xl flex flex-col items-center p-4">
         <button
           type="button"
-          className="absolute top-2 right-2 p-1 text-gray-400 hover:bg-gray-700 focus:outline-none rounded-md"
+          className="absolute top-2 right-2 p-1 text-gray-400 hover:bg-gray-500 focus:outline-none rounded-md"
           onClick={closeModal}
         >
           <span className="sr-only">Close menu</span>
