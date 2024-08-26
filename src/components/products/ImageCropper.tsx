@@ -94,6 +94,19 @@ export default function ImageCropper({
           </button>
         </div>
       )}
+      {crop && (
+        <canvas
+          ref={previewCanvasRef}
+          className="mt-4"
+          style={{
+            display: "none",
+            border: "1px solid black",
+            objectFit: "contain",
+            width: 150,
+            height: 150,
+          }}
+        />
+      )}
     </div>
   );
 }
