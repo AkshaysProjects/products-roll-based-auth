@@ -3,9 +3,9 @@ export interface User {
   email: string;
   emailVerified: boolean;
   role: UserRole;
-  pendingChanges: number;
-  approvedChanges: number;
-  rejectedChanges: number;
+
+  createdAt: string;
+  updatedAt: string;
 }
 
 export enum UserRole {

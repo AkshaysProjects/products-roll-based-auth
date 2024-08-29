@@ -8,3 +8,7 @@ export const getInboxUrl = (email: string) => {
   };
   return commonInboxUrls[domain] || `https://${domain}`;
 };
+
+export const getInitials = (email: string) => {
+  return email.split("@")[0].slice(0, 2).toUpperCase();
+};
