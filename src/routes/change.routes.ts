@@ -11,6 +11,12 @@ changeRouter.use(authMiddleware);
 // Get all pending changes
 changeRouter.get("/", changeControllers.getPendingChanges);
 
+// Get all changes
+changeRouter.get("/all", changeControllers.getAllChanges);
+
+// Get change by ID
+changeRouter.get("/:id", changeControllers.getChangeById);
+
 // Approve a pending change
 changeRouter.post("/:id/approve", changeControllers.approveChange);
 

@@ -4,74 +4,74 @@ import Product, { type IProduct } from "../models/Product";
 import { ObjectId } from "../types";
 
 const createProduct = async (product: Partial<IProduct>) => {
-	return Product.create(product).then((data) => ({ data }));
+  return Product.create(product).then((data) => ({ data }));
 };
 
 const createPendingProduct = async (
-	product: Partial<IProduct>,
-	userId: ObjectId,
+  product: Partial<IProduct>,
+  userId: ObjectId
 ) => {
-	const data = await PendingProduct.create(product);
-	const change = await PendingChange.create({
-		user: userId,
-		pendingChange: data._id,
-	});
-	return { data, change };
+  const data = await PendingProduct.create(product);
+  const change = await PendingChange.create({
+    user: userId,
+    updatedProduct: data._id,
+  });
+  return { data, change };
 };
 
 const findAllProducts = async () => {
-	return Product.find().lean();
+  return Product.find().lean();
 };
 
 const findProductById = async (id: string) => {
-	return Product.findById(id).lean();
+  return Product.findById(id).lean();
 };
 
 const findPendingProductById = async (id: string | ObjectId) => {
-	return PendingProduct.findById(id).lean();
+  return PendingProduct.findById(id).lean();
 };
 
 const findByIdAndUpdate = async (
-	id: string | ObjectId,
-	data: Partial<IProduct>,
+  id: string | ObjectId,
+  data: Partial<IProduct>
 ) => {
-	return Product.findByIdAndUpdate(id, data, {
-		new: true,
-		upsert: true,
-		setDefaultsOnInsert: true,
-	}).lean();
+  return Product.findByIdAndUpdate(id, data, {
+    new: true,
+    upsert: true,
+    setDefaultsOnInsert: true,
+  }).lean();
 };
 
 const updateProduct = async (
-	productId: string,
-	data: Partial<IProduct>,
-	userId?: ObjectId,
+  productId: string,
+  data: Partial<IProduct>,
+  userId?: ObjectId
 ) => {
-	if (userId) {
-		const pendingChange = await PendingProduct.create(data);
-		const change = await PendingChange.create({
-			user: userId,
-			product: new ObjectId(productId),
-			pendingChange: pendingChange._id,
-		});
-		return { data: pendingChange, change };
-	}
-	return Product.findByIdAndUpdate(productId, data, { new: true })
-		.lean()
-		.then((data) => ({ data }));
+  if (userId) {
+    const pendingChange = await PendingProduct.create(data);
+    const change = await PendingChange.create({
+      user: userId,
+      product: new ObjectId(productId),
+      updatedProduct: pendingChange._id,
+    });
+    return { data: pendingChange, change };
+  }
+  return Product.findByIdAndUpdate(productId, data, { new: true })
+    .lean()
+    .then((data) => ({ data }));
 };
 
 const deleteProduct = async (productId: string) => {
-	return Product.findByIdAndDelete(productId);
+  return Product.findByIdAndDelete(productId);
 };
 
 export default {
-	createProduct,
-	createPendingProduct,
-	findAllProducts,
-	findPendingProductById,
-	findProductById,
-	findByIdAndUpdate,
-	updateProduct,
-	deleteProduct,
+  createProduct,
+  createPendingProduct,
+  findAllProducts,
+  findPendingProductById,
+  findProductById,
+  findByIdAndUpdate,
+  updateProduct,
+  deleteProduct,
 };
