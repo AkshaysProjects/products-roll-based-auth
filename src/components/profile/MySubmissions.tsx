@@ -29,20 +29,12 @@ import {
   IndianRupeeIcon,
   XCircle,
 } from "lucide-react";
-import { useState } from "react";
 
 export default function MySubmissions() {
   const { data: submissions, isLoading } = useMySubmissions();
-  const [expandedSubmission, setExpandedSubmission] = useState<string | null>(
-    null
-  );
 
   if (isLoading || !submissions) return <Spinner />;
   if (!submissions.length) return <NoSubmissions />;
-
-  const toggleExpand = (id: string) => {
-    setExpandedSubmission(expandedSubmission === id ? null : id);
-  };
 
   const getStatusIcon = (status: PendingChange["status"]) => {
     switch (status) {
