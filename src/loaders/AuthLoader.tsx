@@ -6,7 +6,7 @@ export default function AuthLoader({
 }: {
   children: React.ReactNode;
 }) {
-  const { isLoading } = useAuth();
-  if (isLoading) return <Spinner />;
+  const { isAuthenticated, isLoading } = useAuth();
+  if (isLoading || isAuthenticated === null) return <Spinner />;
   return <>{children}</>;
 }

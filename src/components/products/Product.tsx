@@ -37,6 +37,7 @@ export default function ProductDetails({
   };
 
   const handleEdit = () => {
+    console.log(isAuthenticated);
     if (isAuthenticated) setIsEditing(true);
     else
       toast({

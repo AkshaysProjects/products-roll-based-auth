@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import useAuth from "@/hooks/useAuth";
 import { Product } from "@/types/product";
 import { formatDate } from "@/utils/date";
 import { PencilIcon, Save, X } from "lucide-react";
@@ -28,6 +29,7 @@ export default function ProductEdit({
 }) {
   const [product, setProduct] = useState(initialProduct);
   const [imageModalOpen, setImageModalOpen] = useState(false);
+  const { isAuthenticated, isAdmin } = useAuth();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -113,9 +115,13 @@ export default function ProductEdit({
       </CardContent>
       <CardFooter>
         <div className="flex w-full gap-2">
-          <Button onClick={handleSave} className="flex-1">
+          <Button
+            onClick={handleSave}
+            className="flex-1"
+            disabled={!isAuthenticated}
+          >
             <Save className="w-4 h-4 mr-2" />
-            Save Changes
+            {isAdmin ? "Save Changes" : "Submit changes for approval"}
           </Button>
           <Button onClick={onCancel} variant="outline" className="flex-1">
             <X className="w-4 h-4 mr-2" />

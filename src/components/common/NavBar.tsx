@@ -12,6 +12,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  if (pathname === "/login") return null;
+  if (pathname === "/register") return null;
+
   const NavButton = ({
     href,
     children,
