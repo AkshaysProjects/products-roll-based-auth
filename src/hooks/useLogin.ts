@@ -16,5 +16,8 @@ export default function useLogin() {
     onSuccess: () => {
       fetchUserDetails();
     },
+    onSettled: () => {
+      fetchUserDetails();
+    },
   });
 }

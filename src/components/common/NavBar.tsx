@@ -58,9 +58,7 @@ export default function Navbar() {
                 My Submissions
               </NavButton>
             )}
-            {isAuthenticated && (
-              <NavButton href="/pending-requests">Profile</NavButton>
-            )}
+            {isAuthenticated && <NavButton href="/profile">Profile</NavButton>}
             <NavButton href="/dashboard">Dashboard</NavButton>
             {!isAuthenticated && (
               <>
