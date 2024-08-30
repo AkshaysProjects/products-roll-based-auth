@@ -27,12 +27,12 @@ export default function LoggedIn() {
 
   useEffect(() => {
     if (countdown === 0) {
-      // router.push("/");
+      router.push("/dashboard");
     }
   }, [countdown, router]);
 
   const handleGoHome = () => {
-    router.push("/");
+    router.push("/dashboard");
   };
 
   return (

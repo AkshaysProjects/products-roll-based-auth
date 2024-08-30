@@ -20,7 +20,7 @@ export default function EmailVerified() {
 
   useEffect(() => {
     if (countdown === 0) {
-      router.push("/");
+      router.push("/dashboard");
     }
   }, [countdown, router]);
 

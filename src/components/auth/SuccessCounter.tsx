@@ -20,7 +20,7 @@ export default function SuccessCounter() {
 
   useEffect(() => {
     if (countdown === 0) {
-      router.push("/");
+      router.push("/dashboard");
     }
   }, [countdown, router]);
 

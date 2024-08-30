@@ -25,7 +25,7 @@ export default function ProductDetails({
     formData.append("name", updatedProduct.name);
     formData.append("description", updatedProduct.description);
     formData.append("price", updatedProduct.price.toString());
-    const imgBlob = dataURLToBlob(updatedProduct.image);
+    const imgBlob = updatedProduct.image === product.image ? product.image : dataURLToBlob(updatedProduct.image);
     formData.append("image", imgBlob);
     api.patch(`/api/product/${updatedProduct._id}`, formData).then((data) => {
       data.data;

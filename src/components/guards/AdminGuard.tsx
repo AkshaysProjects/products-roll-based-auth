@@ -40,7 +40,7 @@ export default function AdminGuard() {
             </p>
           </CardContent>
           <CardFooter>
-            <Button onClick={() => router.push("/")} className="w-full">
+            <Button onClick={() => router.push("/dashboard")} className="w-full">
               Go to Homepage
             </Button>
           </CardFooter>
