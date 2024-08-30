@@ -27,7 +27,7 @@ export default function LoggedIn() {
 
   useEffect(() => {
     if (countdown === 0) {
-      router.push("/");
+      // router.push("/");
     }
   }, [countdown, router]);
 
