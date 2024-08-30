@@ -12,6 +12,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  if (pathname == "/") return null;
   if (pathname === "/login") return null;
   if (pathname === "/register") return null;
 
