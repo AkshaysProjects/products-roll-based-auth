@@ -1,7 +1,7 @@
 import { CorsOptions } from "cors";
 
 const corsConfig: CorsOptions = {
-  origin: "http://localhost:3001",
+  origin: "https://rbe.akshaykakatkar.tech",
   credentials: true,
 };
 

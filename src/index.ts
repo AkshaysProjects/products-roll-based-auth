@@ -11,6 +11,9 @@ import apiRouter from "./routes";
 // Create a new express application instance
 const app = express();
 
+// Trust proxy
+app.enable("trust proxy");
+
 // Use cors middleware
 app.use(cors(corsConfig));
 
