@@ -11,11 +11,5 @@ const login = (token: string) => {
 export default function useLogin() {
   return useMutation({
     mutationFn: login,
-    onSuccess: () => {
-      console.log("success");
-    },
-    onError: () => {
-      console.log("error");
-    },
   });
 }
