@@ -57,7 +57,7 @@ export default function ReviewRequest() {
               ? "The product edit request has been approved successfully."
               : "The product edit request has been rejected successfully.",
         });
-        router.push("/admin/pending-requests");
+        router.push("/pending-requests");
       })
       .catch(() => {
         toast({
