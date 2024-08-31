@@ -1,3 +1,4 @@
+import useAuth from "@/hooks/useAuth";
 import api from "@/utils/api";
 import { useMutation } from "@tanstack/react-query";
 
@@ -9,7 +10,14 @@ const verifyEmail = (token: string) => {
 };
 
 export default function useVerifyEmail() {
+  const { fetchUserDetails } = useAuth();
   return useMutation({
     mutationFn: verifyEmail,
+    onSuccess: () => {
+      fetchUserDetails();
+    },
+    onSettled: () => {
+      fetchUserDetails();
+    },
   });
 }
